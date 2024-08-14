@@ -12110,7 +12110,7 @@ def test_object_lock_put_obj_retention_invalid_bucket():
     client.put_object(Bucket=bucket_name, Body='abc', Key=key)
     retention = {'Mode':'GOVERNANCE', 'RetainUntilDate':datetime.datetime(2030,1,1,tzinfo=pytz.UTC)}
     e = assert_raises(ClientError, client.put_object_retention, Bucket=bucket_name, Key=key, Retention=retention)
-    print(e)
+    print('Hello', e)
     status, error_code = _get_status_and_error_code(e.response)
     assert status == 400
     assert error_code == 'InvalidRequest'
