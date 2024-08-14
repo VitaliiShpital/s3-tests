@@ -368,7 +368,7 @@ def get_cloud_config(cfg):
         config.cloud_storage_class = cfg.get('s3 cloud', "cloud_storage_class")
     except (configparser.NoSectionError, configparser.NoOptionError):
         config.cloud_storage_class = None
-    
+
     try:
         config.cloud_retain_head_object = cfg.get('s3 cloud',"retain_head_object")
     except (configparser.NoSectionError, configparser.NoOptionError):
@@ -394,6 +394,9 @@ def get_client(client_config=None):
     if client_config == None:
         client_config = Config(signature_version='s3v4')
 
+    print('config.main_access_key', config.main_access_key)
+    print('config.main_secret_key', config.main_secret_key)
+    print('config.default_endpoint', config.default_endpoint)
     client = boto3.client(service_name='s3',
                         aws_access_key_id=config.main_access_key,
                         aws_secret_access_key=config.main_secret_key,
