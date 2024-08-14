@@ -3359,7 +3359,7 @@ def test_object_put_acl_mtime():
 
     content = 'foooz'
     client.put_object(Bucket=bucket_name, Key=key, Body=content)
-    
+
     obj_response = client.head_object(Bucket=bucket_name, Key=key)
     create_mtime = obj_response['LastModified']
 
@@ -3374,7 +3374,7 @@ def test_object_put_acl_mtime():
     # set acl
     time.sleep(2)
     client.put_object_acl(ACL='private',Bucket=bucket_name, Key=key)
-    
+
     # mtime should match with create mtime
     obj_response = client.head_object(Bucket=bucket_name, Key=key)
     _compare_dates(create_mtime,obj_response['LastModified'])
@@ -9346,7 +9346,7 @@ def test_lifecycle_cloud_transition():
         response = client.head_object(Bucket=bucket_name, Key=keys[0])
         assert 0 == response['ContentLength']
         assert cloud_sc == response['StorageClass']
-    
+
         # GET should return InvalidObjectState error
         e = assert_raises(ClientError, client.get_object, Bucket=bucket_name, Key=src_key)
         status, error_code = _get_status_and_error_code(e.response)
@@ -9515,7 +9515,7 @@ def test_lifecycle_noncur_cloud_transition():
     result = list_bucket_versions(client, bucket)
 
     for src_key in keys:
-        for k in result[src_key]: 
+        for k in result[src_key]:
             expire1_key1_str = prefix + 'test1/a' + "-" + k['VersionId']
             verify_object(cloud_client, target_path, expire1_key1_str, None, target_sc)
 
@@ -9556,7 +9556,7 @@ def test_lifecycle_cloud_transition_large_obj():
     expire1_keys = list_bucket_storage_class(client, bucket)
     assert len(expire1_keys['STANDARD']) == 1
 
-    
+
     if (retain_head_object != None and retain_head_object == "true"):
         assert len(expire1_keys[cloud_sc]) == 1
     else:
@@ -12110,6 +12110,7 @@ def test_object_lock_put_obj_retention_invalid_bucket():
     client.put_object(Bucket=bucket_name, Body='abc', Key=key)
     retention = {'Mode':'GOVERNANCE', 'RetainUntilDate':datetime.datetime(2030,1,1,tzinfo=pytz.UTC)}
     e = assert_raises(ClientError, client.put_object_retention, Bucket=bucket_name, Key=key, Retention=retention)
+    print(e)
     status, error_code = _get_status_and_error_code(e.response)
     assert status == 400
     assert error_code == 'InvalidRequest'
@@ -12377,7 +12378,7 @@ def test_object_lock_multi_delete_object_with_retention():
 
     assert len(delete_response['Deleted']) == 1
     assert len(delete_response['Errors']) == 1
-    
+
     failed_object = delete_response['Errors'][0]
     assert failed_object['Code'] == 'AccessDenied'
     assert failed_object['Key'] == key1
@@ -13294,7 +13295,7 @@ def test_sse_s3_default_post_object_authenticated_request():
                 ["starts-with", "$key", "foo"],
                 {"acl": "private"},
                 ["starts-with", "$Content-Type", "text/plain"],
-                ["starts-with", "$x-amz-server-side-encryption", ""], 
+                ["starts-with", "$x-amz-server-side-encryption", ""],
                 ["content-length-range", 0, 1024]
             ]
     }
@@ -13342,7 +13343,7 @@ def test_sse_kms_default_post_object_authenticated_request():
                 ["starts-with", "$key", "foo"],
                 {"acl": "private"},
                 ["starts-with", "$Content-Type", "text/plain"],
-                ["starts-with", "$x-amz-server-side-encryption", ""], 
+                ["starts-with", "$x-amz-server-side-encryption", ""],
                 ["content-length-range", 0, 1024]
             ]
     }
