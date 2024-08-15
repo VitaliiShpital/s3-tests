@@ -12080,8 +12080,6 @@ def test_object_lock_get_obj_lock_invalid_bucket():
     client = get_client()
     client.create_bucket(Bucket=bucket_name)
     e = assert_raises(ClientError, client.get_object_lock_configuration, Bucket=bucket_name)
-    print('get_error', e)
-    print('get_response', e.response)
     status, error_code = _get_status_and_error_code(e.response)
     assert status == 404
     assert error_code == 'ObjectLockConfigurationNotFoundError'
@@ -12179,6 +12177,8 @@ def test_object_lock_get_obj_retention_invalid_bucket():
     key = 'file1'
     client.put_object(Bucket=bucket_name, Body='abc', Key=key)
     e = assert_raises(ClientError, client.get_object_retention, Bucket=bucket_name, Key=key)
+    print('get_error', e)
+    print('get_response', e.response)
     status, error_code = _get_status_and_error_code(e.response)
     assert status == 400
     assert error_code == 'InvalidRequest'
