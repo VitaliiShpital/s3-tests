@@ -394,9 +394,6 @@ def get_client(client_config=None):
     if client_config == None:
         client_config = Config(signature_version='s3v4')
 
-    print('config.main_access_key', config.main_access_key)
-    print('config.main_secret_key', config.main_secret_key)
-    print('config.default_endpoint', config.default_endpoint)
     client = boto3.client(service_name='s3',
                         aws_access_key_id=config.main_access_key,
                         aws_secret_access_key=config.main_secret_key,
